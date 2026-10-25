@@ -1,0 +1,6 @@
+{
+  "name": "sadaf 💔",
+  "description": "ماشین حساب مهندسی فوق حرفه‌ای صدف با حافظه، کپی و پیست، رسم نمودار توابع و تاریخچه محاسبات",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
