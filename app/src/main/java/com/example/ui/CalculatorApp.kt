@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.math.AngleMode
 import com.example.ui.components.CalculatorKeypad
 import com.example.ui.components.DisplayScreen
 import com.example.ui.components.GraphScreen
@@ -61,7 +62,6 @@ fun CalculatorApp(
                     .fillMaxSize()
                     .testTag("calculator_main_container")
             ) {
-                // Header Bar with sadaf 💔 branding & navigation
                 HeaderBar(
                     state = state,
                     onTabSelected = { viewModel.setActiveTab(it) },
@@ -70,7 +70,6 @@ fun CalculatorApp(
                     onToggleHaptic = { viewModel.toggleHaptic() }
                 )
 
-                // Tab Content with Animated Content transition
                 AnimatedContent(
                     targetState = state.activeTab,
                     transitionSpec = {
@@ -81,7 +80,6 @@ fun CalculatorApp(
                 ) { tab ->
                     when (tab) {
                         0 -> {
-                            // Scientific Calculator Mode
                             Column(
                                 modifier = Modifier
                                     .fillMaxSize()
@@ -106,14 +104,14 @@ fun CalculatorApp(
                         }
 
                         1 -> {
-                            // Graphical Function Plotter 2D
+                            // نمودار همیشه با رادیان حساب می‌شود (مستقل از DEG/GRAD ماشین‌حساب)
                             GraphScreen(
                                 functionExpr = state.graphFunction,
                                 xMin = state.graphXMin,
                                 xMax = state.graphXMax,
                                 yMin = state.graphYMin,
                                 yMax = state.graphYMax,
-                                angleMode = state.angleMode,
+                                angleMode = AngleMode.RAD,
                                 onFunctionChange = { viewModel.setGraphFunction(it) },
                                 onZoom = { viewModel.zoomGraph(it) },
                                 onReset = { viewModel.resetGraph() },
@@ -122,7 +120,6 @@ fun CalculatorApp(
                         }
 
                         2 -> {
-                            // History & Memory Inspector
                             HistoryAndMemorySheet(
                                 historyList = history,
                                 memoryValue = state.memoryValue,
@@ -153,7 +150,6 @@ fun CalculatorApp(
                 }
             }
 
-            // Floating Animated Notification Toast for Copy, Paste, & Memory
             AnimatedVisibility(
                 visible = state.toastMessage != null,
                 enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
