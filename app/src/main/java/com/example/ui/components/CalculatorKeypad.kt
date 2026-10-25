@@ -1,20 +1,16 @@
 package com.example.ui.components
 
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,7 +37,7 @@ fun CalculatorKeypad(
             .padding(horizontal = 12.dp, vertical = 6.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // --- Scientific Functions Panel (Compact 3 rows) ---
+        // --- Scientific Functions Panel ---
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -65,39 +61,14 @@ fun CalculatorKeypad(
                     modifier = Modifier.weight(1f),
                     testTag = "key_second_fn"
                 )
-                SciKey(
-                    label = "MC",
-                    onClick = { onKeyPress("MC") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_mc"
-                )
-                SciKey(
-                    label = "MR",
-                    onClick = { onKeyPress("MR") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_mr"
-                )
-                SciKey(
-                    label = "M+",
-                    onClick = { onKeyPress("M+") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_m_plus"
-                )
-                SciKey(
-                    label = "M-",
-                    onClick = { onKeyPress("M-") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_m_minus"
-                )
-                SciKey(
-                    label = "MS",
-                    onClick = { onKeyPress("MS") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_ms"
-                )
+                SciKey(label = "MC", onClick = { onKeyPress("MC") }, modifier = Modifier.weight(1f), testTag = "key_mc")
+                SciKey(label = "MR", onClick = { onKeyPress("MR") }, modifier = Modifier.weight(1f), testTag = "key_mr")
+                SciKey(label = "M+", onClick = { onKeyPress("M+") }, modifier = Modifier.weight(1f), testTag = "key_m_plus")
+                SciKey(label = "M-", onClick = { onKeyPress("M-") }, modifier = Modifier.weight(1f), testTag = "key_m_minus")
+                SciKey(label = "MS", onClick = { onKeyPress("MS") }, modifier = Modifier.weight(1f), testTag = "key_ms")
             }
 
-            // Sci Row 2: Trig & Powers
+            // Sci Row 2: Trig & constants
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
@@ -120,18 +91,8 @@ fun CalculatorKeypad(
                     modifier = Modifier.weight(1f),
                     testTag = "key_tan"
                 )
-                SciKey(
-                    label = "π",
-                    onClick = { onKeyPress("π") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_pi"
-                )
-                SciKey(
-                    label = "e",
-                    onClick = { onKeyPress("e") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_e"
-                )
+                SciKey(label = "π", onClick = { onKeyPress("π") }, modifier = Modifier.weight(1f), testTag = "key_pi")
+                SciKey(label = "e", onClick = { onKeyPress("e") }, modifier = Modifier.weight(1f), testTag = "key_e")
                 SciKey(
                     label = if (isSecondFunction) "x²" else "√",
                     onClick = { onKeyPress(if (isSecondFunction) "x²" else "√") },
@@ -164,24 +125,22 @@ fun CalculatorKeypad(
                     modifier = Modifier.weight(1f),
                     testTag = "key_pow"
                 )
-                SciKey(
-                    label = "(",
-                    onClick = { onKeyPress("(") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_open_paren"
-                )
-                SciKey(
-                    label = ")",
-                    onClick = { onKeyPress(")") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_close_paren"
-                )
-                SciKey(
-                    label = "1/x",
-                    onClick = { onKeyPress("1/x") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_reciprocal"
-                )
+                SciKey(label = "(", onClick = { onKeyPress("(") }, modifier = Modifier.weight(1f), testTag = "key_open_paren")
+                SciKey(label = ")", onClick = { onKeyPress(")") }, modifier = Modifier.weight(1f), testTag = "key_close_paren")
+                SciKey(label = "1/x", onClick = { onKeyPress("1/x") }, modifier = Modifier.weight(1f), testTag = "key_reciprocal")
+            }
+
+            // Sci Row 4: Extra keys (percent, factorial, abs, cube, ...)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                SciKey(label = "%", activeColor = NeonAmber, onClick = { onKeyPress("%") }, modifier = Modifier.weight(1f), testTag = "key_percent")
+                SciKey(label = "!", onClick = { onKeyPress("!") }, modifier = Modifier.weight(1f), testTag = "key_factorial")
+                SciKey(label = "|x|", onClick = { onKeyPress("|x|") }, modifier = Modifier.weight(1f), testTag = "key_abs")
+                SciKey(label = "x²", onClick = { onKeyPress("x²") }, modifier = Modifier.weight(1f), testTag = "key_square")
+                SciKey(label = "x³", onClick = { onKeyPress("x³") }, modifier = Modifier.weight(1f), testTag = "key_cube")
+                SciKey(label = "√", onClick = { onKeyPress("√") }, modifier = Modifier.weight(1f), testTag = "key_sqrt2")
             }
         }
 
@@ -190,189 +149,39 @@ fun CalculatorKeypad(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // Row 1: AC, C, DEL, ÷
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                MainKey(
-                    label = "AC",
-                    textColor = NeonOrange,
-                    bgColor = KeypadFnBg,
-                    borderColor = NeonOrange.copy(alpha = 0.5f),
-                    onClick = { onKeyPress("AC") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_ac"
-                )
-                MainKey(
-                    label = "C",
-                    textColor = NeonOrange,
-                    bgColor = KeypadFnBg,
-                    onClick = { onKeyPress("C") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_c"
-                )
-                MainKey(
-                    label = "DEL",
-                    textColor = TextWhite,
-                    bgColor = KeypadFnBg,
-                    onClick = { onKeyPress("DEL") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_del"
-                )
-                MainKey(
-                    label = "÷",
-                    textColor = NeonCyan,
-                    bgColor = KeypadOpBg,
-                    borderColor = NeonCyan.copy(alpha = 0.4f),
-                    fontSize = 24.sp,
-                    onClick = { onKeyPress("÷") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_divide"
-                )
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                MainKey(label = "AC", textColor = NeonOrange, bgColor = KeypadFnBg, borderColor = NeonOrange.copy(alpha = 0.5f), onClick = { onKeyPress("AC") }, modifier = Modifier.weight(1f), testTag = "key_ac")
+                MainKey(label = "C", textColor = NeonOrange, bgColor = KeypadFnBg, onClick = { onKeyPress("C") }, modifier = Modifier.weight(1f), testTag = "key_c")
+                MainKey(label = "DEL", textColor = TextWhite, bgColor = KeypadFnBg, onClick = { onKeyPress("DEL") }, modifier = Modifier.weight(1f), testTag = "key_del")
+                MainKey(label = "÷", textColor = NeonCyan, bgColor = KeypadOpBg, borderColor = NeonCyan.copy(alpha = 0.4f), fontSize = 24.sp, onClick = { onKeyPress("÷") }, modifier = Modifier.weight(1f), testTag = "key_divide")
             }
 
-            // Row 2: 7, 8, 9, ×
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                MainKey(
-                    label = "7",
-                    onClick = { onKeyPress("7") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_7"
-                )
-                MainKey(
-                    label = "8",
-                    onClick = { onKeyPress("8") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_8"
-                )
-                MainKey(
-                    label = "9",
-                    onClick = { onKeyPress("9") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_9"
-                )
-                MainKey(
-                    label = "×",
-                    textColor = NeonCyan,
-                    bgColor = KeypadOpBg,
-                    borderColor = NeonCyan.copy(alpha = 0.4f),
-                    fontSize = 24.sp,
-                    onClick = { onKeyPress("×") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_multiply"
-                )
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                MainKey(label = "7", onClick = { onKeyPress("7") }, modifier = Modifier.weight(1f), testTag = "key_7")
+                MainKey(label = "8", onClick = { onKeyPress("8") }, modifier = Modifier.weight(1f), testTag = "key_8")
+                MainKey(label = "9", onClick = { onKeyPress("9") }, modifier = Modifier.weight(1f), testTag = "key_9")
+                MainKey(label = "×", textColor = NeonCyan, bgColor = KeypadOpBg, borderColor = NeonCyan.copy(alpha = 0.4f), fontSize = 24.sp, onClick = { onKeyPress("×") }, modifier = Modifier.weight(1f), testTag = "key_multiply")
             }
 
-            // Row 3: 4, 5, 6, −
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                MainKey(
-                    label = "4",
-                    onClick = { onKeyPress("4") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_4"
-                )
-                MainKey(
-                    label = "5",
-                    onClick = { onKeyPress("5") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_5"
-                )
-                MainKey(
-                    label = "6",
-                    onClick = { onKeyPress("6") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_6"
-                )
-                MainKey(
-                    label = "−",
-                    textColor = NeonCyan,
-                    bgColor = KeypadOpBg,
-                    borderColor = NeonCyan.copy(alpha = 0.4f),
-                    fontSize = 24.sp,
-                    onClick = { onKeyPress("-") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_subtract"
-                )
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                MainKey(label = "4", onClick = { onKeyPress("4") }, modifier = Modifier.weight(1f), testTag = "key_4")
+                MainKey(label = "5", onClick = { onKeyPress("5") }, modifier = Modifier.weight(1f), testTag = "key_5")
+                MainKey(label = "6", onClick = { onKeyPress("6") }, modifier = Modifier.weight(1f), testTag = "key_6")
+                MainKey(label = "−", textColor = NeonCyan, bgColor = KeypadOpBg, borderColor = NeonCyan.copy(alpha = 0.4f), fontSize = 24.sp, onClick = { onKeyPress("-") }, modifier = Modifier.weight(1f), testTag = "key_subtract")
             }
 
-            // Row 4: 1, 2, 3, +
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                MainKey(
-                    label = "1",
-                    onClick = { onKeyPress("1") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_1"
-                )
-                MainKey(
-                    label = "2",
-                    onClick = { onKeyPress("2") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_2"
-                )
-                MainKey(
-                    label = "3",
-                    onClick = { onKeyPress("3") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_3"
-                )
-                MainKey(
-                    label = "+",
-                    textColor = NeonCyan,
-                    bgColor = KeypadOpBg,
-                    borderColor = NeonCyan.copy(alpha = 0.4f),
-                    fontSize = 24.sp,
-                    onClick = { onKeyPress("+") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_add"
-                )
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                MainKey(label = "1", onClick = { onKeyPress("1") }, modifier = Modifier.weight(1f), testTag = "key_1")
+                MainKey(label = "2", onClick = { onKeyPress("2") }, modifier = Modifier.weight(1f), testTag = "key_2")
+                MainKey(label = "3", onClick = { onKeyPress("3") }, modifier = Modifier.weight(1f), testTag = "key_3")
+                MainKey(label = "+", textColor = NeonCyan, bgColor = KeypadOpBg, borderColor = NeonCyan.copy(alpha = 0.4f), fontSize = 24.sp, onClick = { onKeyPress("+") }, modifier = Modifier.weight(1f), testTag = "key_add")
             }
 
-            // Row 5: +/-, 0, ., =
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                MainKey(
-                    label = "+/-",
-                    textColor = TextMuted,
-                    onClick = { onKeyPress("+/-") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_plus_minus"
-                )
-                MainKey(
-                    label = "0",
-                    onClick = { onKeyPress("0") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_0"
-                )
-                MainKey(
-                    label = ".",
-                    fontSize = 22.sp,
-                    onClick = { onKeyPress(".") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_dot"
-                )
-                // Hero equals key with glowing Neon Rose gradient
-                MainKey(
-                    label = "=",
-                    textColor = TextWhite,
-                    bgColor = NeonRose,
-                    isHero = true,
-                    fontSize = 26.sp,
-                    onClick = { onKeyPress("=") },
-                    modifier = Modifier.weight(1f),
-                    testTag = "key_equals"
-                )
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                MainKey(label = "+/-", textColor = TextMuted, onClick = { onKeyPress("+/-") }, modifier = Modifier.weight(1f), testTag = "key_plus_minus")
+                MainKey(label = "0", onClick = { onKeyPress("0") }, modifier = Modifier.weight(1f), testTag = "key_0")
+                MainKey(label = ".", fontSize = 22.sp, onClick = { onKeyPress(".") }, modifier = Modifier.weight(1f), testTag = "key_dot")
+                MainKey(label = "=", textColor = TextWhite, bgColor = NeonRose, isHero = true, fontSize = 26.sp, onClick = { onKeyPress("=") }, modifier = Modifier.weight(1f), testTag = "key_equals")
             }
         }
     }
